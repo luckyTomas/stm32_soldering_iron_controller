@@ -24,6 +24,7 @@ extern RE_State_t RE1_Data;
 struct{
 	int elapsed_cnt;
 	int pulse_cnt;
+	int capture;
 }tim3_stats;
 int err2=0;
 volatile int samples_dumped, CNDTR;
@@ -31,9 +32,27 @@ uint32_t tick_dt;
 uint32_t started ;
 
 
+HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim){
+	if(htim == &tim3_pwm ){
+		tim3_stats.capture ++;
+	}
+
+}
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 		tim3_stats.pulse_cnt ++;
 		if(htim == &tim3_pwm ){
+		static int i = 0;
+		i++;
+		if(i%2==0){
+#ifdef TEST_ALLTIME_SAMPLING
+		 __HAL_DMA_DISABLE(hadc1.DMA_Handle);
+#endif
+		}else{
+#ifdef TEST_ALLTIME_SAMPLING
+		__HAL_DMA_ENABLE(hadc1.DMA_Handle);
+#endif
+		}
+
 			tim3_stats.pulse_cnt ++;
 		}
 	}
@@ -41,6 +60,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if(htim == &tim3_pwm ){
 		tim3_stats.elapsed_cnt++;
+
 	}
 	if(htim != &tim4_temp_measure)
 		return;
@@ -63,8 +83,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		//__HAL_ADC_ENABLE(&hadc1);
 		//__HAL_ADC_ENABLE(&hadc2);
 		started = HAL_GetTick();
+		//HAL_DMA_Start(&hadc1.DMA_Handle);
+#ifdef TEST_ALLTIME_SAMPLING
+		 __HAL_DMA_ENABLE(hadc1.DMA_Handle);
+#else
 		HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) adc_measures, sizeof(adc_measures)/ sizeof(uint32_t));
-
+#endif
 	}else{
 
 		err2++;
@@ -94,7 +118,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	} else if(iron_temp_measure_state == iron_temp_measure_started) {
 
 #ifdef TEST_ALLTIME_SAMPLING
-		 HAL_DMA_Abort(&hadc1.DMA_Handle);
+		__HAL_DMA_DISABLE(hadc1.DMA_Handle);
 #else
 		HAL_ADCEx_MultiModeStop_DMA(&hadc1);
 #endif
