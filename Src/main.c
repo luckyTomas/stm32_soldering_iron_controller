@@ -222,6 +222,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		iron_temp_measure_state = iron_temp_measure_started;
 		return;
 	} else if(iron_temp_measure_state == iron_temp_measure_started) {
+		HAL_ADCEx_MultiModeStop_DMA(&hadc1);
 		for(int x = 0; x < sizeof(adc_measures)/sizeof(adc_measures[0]); ++x) {
 			temp = adc_measures[x].iron;
 			acc += temp;
@@ -247,7 +248,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		}
 		iron_temp_adc_avg = UINT_DIV(acc, ROLLING_AVG_LEN); //minimize divide error from +-1 to +- 0.5
 		iron_temp_measure_state = iron_temp_measure_ready;
-		HAL_ADC_Stop_DMA(&hadc1);
 		if(getIronOn())
 			HAL_TIM_PWM_Start(&tim3_pwm, TIM_CHANNEL_3);  // don't use turnIronOn();
 		}
@@ -276,7 +276,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL14;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -291,13 +291,13 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
 
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV4;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
