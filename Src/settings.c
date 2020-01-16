@@ -67,7 +67,7 @@ void resetSettings() {
 	strcpy(systemSettings.ironTips[1].name, "010");
 #else
 	for(uint8_t x = 0; x < 10; ++x) {
-		systemSettings.ironTips[x].calADC_At_200 = 1300;
+		systemSettings.ironTips[x].calADC_At_200 = 1400;
 		systemSettings.ironTips[x].calADC_At_300 = 2000;
 		systemSettings.ironTips[x].calADC_At_400 = 3000;
 		systemSettings.ironTips[x].PID.Kp = 0.0003;
@@ -80,15 +80,15 @@ void resetSettings() {
 	}
 	systemSettings.currentNumberOfTips = 4;
 	systemSettings.currentTip = 1;
-	systemSettings.ironTips[1].calADC_At_200 = 1221;
-	systemSettings.ironTips[1].calADC_At_300 = 1904;
+	systemSettings.ironTips[1].calADC_At_200 = 1300;
+	systemSettings.ironTips[1].calADC_At_300 = 2100;
 	systemSettings.ironTips[1].calADC_At_400 = 2586;
 	strcpy(systemSettings.ironTips[1].name, "B  \0ÿ");
 	systemSettings.ironTips[1].PID.max = 1;
 	systemSettings.ironTips[1].PID.min = 0;
-	systemSettings.ironTips[1].PID.Kp = 0.0040069999999999999*1.5;
-	systemSettings.ironTips[1].PID.Ki = 0.003106000000000002*10;
-	systemSettings.ironTips[1].PID.Kd = 0.00007*10;
+	systemSettings.ironTips[1].PID.Kp = 0.0040069999999999999*1;
+	systemSettings.ironTips[1].PID.Ki = 0.003106000000000002*5;
+	systemSettings.ironTips[1].PID.Kd = 0;//0.00007*10;
 	systemSettings.ironTips[1].PID.maxI = 200;
 	systemSettings.ironTips[1].PID.minI = -50;
 	systemSettings.ironTips[2].calADC_At_200 = 1463;
