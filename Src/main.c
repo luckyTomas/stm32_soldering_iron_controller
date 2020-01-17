@@ -158,6 +158,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 #define ROLLING_AVG_LEN 	(sizeof(ironTempADCRollingAverage)/sizeof(ironTempADCRollingAverage[0]))
 int aleliuja;
 int err=0;
+volatile uint16_t temp2;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 	GET_TS(Ts[2]);
@@ -174,6 +175,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		iron_temp_measure_state = iron_temp_measure_started;
 		return;
 	} else if(iron_temp_measure_state == iron_temp_measure_started) {
+		HAL_ADCEx_MultiModeStop_DMA(&hadc1);
 		Ts[4] = HAL_GetTick() - started;
 		//__HAL_ADC_DISABLE(&hadc1);
 		//__HAL_ADC_DISABLE(&hadc2);
@@ -185,6 +187,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 		for(int x = 0; x < sizeof(adc_measures)/sizeof(adc_measures[0]); ++x) {
 			temp = adc_measures[x].iron;
+			temp2 = adc_measures[x].iron>>16;
 			if( adc_measures[x].iron==0) err++;
 
 			acc += temp;
@@ -607,7 +610,7 @@ int main(void)
 
 	  HAL_IWDG_Refresh(&hiwdg);
 	  if(iron_temp_measure_state == iron_temp_measure_ready) {
-		  HAL_ADCEx_MultiModeStop_DMA(&hadc1);
+
 		  readTipTemperatureCompensated(1);
 
 		  if(HAL_GPIO_ReadPin(WAKE_GPIO_Port, WAKE_Pin) == GPIO_PIN_RESET) {
