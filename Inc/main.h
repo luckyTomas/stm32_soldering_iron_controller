@@ -121,6 +121,8 @@
 #define FAKE_25_COLD_JUNGTION
 #define FAKE_SUPPLY_VOLTAGE_OK
 #define LEAVE_ONLY_IRON_MEAS
+
+#define MAKE_FLAWLESS_SAMPLING
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

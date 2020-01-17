@@ -108,3 +108,38 @@ uint8_t isavgof5(int32_t data, ISAVGOF5 *i){
 
   return  i->busena;
 }
+
+//volatile 	uint16_t val2;
+#define THRESHOLD_ADC_FOR_TEMP 2500
+uint16_t val2;
+
+uint32_t sum_u32_arr(uint32_t *arr_p, uint16_t len){
+	uint32_t accu=0;
+	uint16_t val;
+	for(int i=0; i<len;i++){
+		val =  (*(arr_p+i)) &0xFFFF;
+		val2 = ((*(arr_p+i))>>16);
+		if(val <= THRESHOLD_ADC_FOR_TEMP){
+			accu += val;
+		}
+	}
+	return accu;
+}
+
+
+uint16_t fifo_u32_mean(uint32_t* fifo_start_p, uint16_t fifo_size, uint16_t head, uint16_t tail){
+
+	uint32_t accu = 0;
+	int delta;
+	if(tail-head>0){
+		delta = tail - head;
+		accu = sum_u32_arr(fifo_start_p+head, delta);
+	}else{
+		delta = (fifo_size-1)-head + tail;
+		accu = sum_u32_arr(fifo_start_p+head, (fifo_size-1)-head);
+		accu += sum_u32_arr(fifo_start_p, tail);
+	}
+
+	return UINT_DIV(accu,delta);
+}
+

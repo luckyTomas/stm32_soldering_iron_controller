@@ -51,7 +51,7 @@
 #include "pid.h"
 #include "settings.h"
 #include "iron.h"
-
+#include "filtrai.h"
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
@@ -116,8 +116,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		iron_temp_measure_state = iron_temp_measure_pwm_stopped;
 		pwmStoppedSince = HAL_GetTick();		
 
+#ifndef MAKE_FLAWLESS_SAMPLING
 		memset(&adc_measures,0,sizeof(adc_measures));
-
+#endif
 
 //		int idx = hadc1.DMA_Handle->Instance->CNDTR;
 //		idx = (idx>ADC_MEASURES_LEN)?ADC_MEASURES_LEN:idx;
@@ -159,6 +160,10 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 int aleliuja;
 int err=0;
 volatile uint16_t temp2;
+uint16_t iron_temp_measure_state2,iron_temp_measure_state3;
+
+
+
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 	GET_TS(Ts[2]);
@@ -175,7 +180,9 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		iron_temp_measure_state = iron_temp_measure_started;
 		return;
 	} else if(iron_temp_measure_state == iron_temp_measure_started) {
+
 		HAL_ADCEx_MultiModeStop_DMA(&hadc1);
+
 		Ts[4] = HAL_GetTick() - started;
 		//__HAL_ADC_DISABLE(&hadc1);
 		//__HAL_ADC_DISABLE(&hadc2);
@@ -184,7 +191,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 //		__HAL_ADC_ENABLE
 		//__HAL_ADC_DISABLE(&hadc1);
 		CNDTR = hadc1.DMA_Handle->Instance->CNDTR;
-
+		iron_temp_measure_state2 = fifo_u32_mean(&adc_measures[0].iron,sizeof(adc_measures)/sizeof(adc_measures[0]),0, 1023 );
+		iron_temp_measure_state3 = fifo_u32_mean(&adc_measures[0].iron,sizeof(adc_measures)/sizeof(adc_measures[0]),800, 400 );
 		for(int x = 0; x < sizeof(adc_measures)/sizeof(adc_measures[0]); ++x) {
 			temp = adc_measures[x].iron;
 			temp2 = adc_measures[x].iron>>16;
@@ -196,6 +204,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 			if(temp < min)
 				min = temp;
 		}
+
+#ifndef MAKE_FLAWLESS_SAMPLING
+		HAL_ADCEx_MultiModeStart_DMA(&hadc1);
+#endif
 //		acc = acc - min - max;
 //		uint16_t last = acc / ((sizeof(adc_measures)/sizeof(adc_measures[0])) -2);
 		iron_temp_measure_state = UINT_DIV( (acc - min - max) , FIFO_LEN-2);
@@ -212,7 +224,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		for(uint8_t x = 0; x < sizeof(ironTempADCRollingAverage)/sizeof(ironTempADCRollingAverage[0]); ++x) {
 			acc += ironTempADCRollingAverage[x];
 		}
+#ifndef MAKE_FLAWLESS_SAMPLING
 		iron_temp_adc_avg = UINT_DIV(acc, ROLLING_AVG_LEN); //minimize divide error from +-1 to +- 0.5
+#else
+		iron_temp_adc_avg = iron_temp_measure_state2;
+#endif
 		iron_temp_measure_state = iron_temp_measure_ready;
 
 		if(getIronOn())

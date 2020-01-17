@@ -207,7 +207,11 @@ void handleIron(uint8_t activity) {
 	  }else{
 		  set = calculatePID(human2adc(tempSetPoint), iron_temp_adc_avg);
 	  }
+#ifndef MAKE_FLAWLESS_SAMPLING
 	  set = 1500.0 * set;
+#else
+	  set = 200.0 * set;
+#endif
   	  //set += 20* (readTipTemperatureCompensated(0)/350.0); // 40 pwm equal to 350C
 	  set = (set<0)?0:set;
 	  set = (set>1500)?1500:set;
