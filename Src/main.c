@@ -102,6 +102,7 @@ result = tick_now - prev_tick;   \
 prev_tick = tick_now;
 	
 uint32_t started ;
+#ifndef MAKE_FLAWLESS_SAMPLING
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if(htim == &tim3_pwm ){
 		tim3_stats.elapsed_cnt++;
@@ -116,9 +117,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		iron_temp_measure_state = iron_temp_measure_pwm_stopped;
 		pwmStoppedSince = HAL_GetTick();		
 
-#ifndef MAKE_FLAWLESS_SAMPLING
 		memset(&adc_measures,0,sizeof(adc_measures));
-#endif
 
 //		int idx = hadc1.DMA_Handle->Instance->CNDTR;
 //		idx = (idx>ADC_MEASURES_LEN)?ADC_MEASURES_LEN:idx;
@@ -129,31 +128,25 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		//__HAL_ADC_ENABLE(&hadc2);
 		started = HAL_GetTick();
 		HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) adc_measures, sizeof(adc_measures)/ sizeof(uint32_t));
-
 	}else{
 
 		err2++;
 	}
 }
-
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
-		tim3_stats.pulse_cnt ++;
-		if(htim == &tim3_pwm ){
-			tim3_stats.pulse_cnt ++;
-		}
+#else
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if(htim == &tim3_pwm ){
+		tim3_stats.elapsed_cnt++;
 	}
-
-
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-	GET_TS(Ts[1]);
-	if(hadc != &hadc1)
+	if(htim != &tim4_temp_measure)
 		return;
-//	if(iron_temp_measure_state == iron_temp_measure_requested) {
-//		HAL_TIM_PWM_Stop(&tim3_pwm, TIM_CHANNEL_3);  // don't use turnIronOff();
-//		iron_temp_measure_state = iron_temp_measure_pwm_stopped;
-//		pwmStoppedSince = HAL_GetTick();
-//	}
+	GET_TS(Ts[0]);
+
+	if(iron_temp_measure_state == iron_temp_measure_idle) {
+		iron_temp_measure_state = iron_temp_measure_started;
+	}
 }
+#endif
 
 #define FIFO_LEN 			(sizeof(adc_measures)/sizeof(adc_measures[0]))
 #define ROLLING_AVG_LEN 	(sizeof(ironTempADCRollingAverage)/sizeof(ironTempADCRollingAverage[0]))
@@ -163,7 +156,7 @@ volatile uint16_t temp2;
 uint16_t iron_temp_measure_state2,iron_temp_measure_state3;
 
 
-
+uint16_t max = 0;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 	GET_TS(Ts[2]);
@@ -171,7 +164,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	static int rindex = 0;
 	static int doOnce = 0;
 	uint32_t acc = 0;
-	uint16_t max = 0;
+
 	uint16_t min = 0xFFFF;
 	uint16_t temp;
 	if(hadc != &hadc1)
@@ -180,9 +173,12 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		iron_temp_measure_state = iron_temp_measure_started;
 		return;
 	} else if(iron_temp_measure_state == iron_temp_measure_started) {
-
+#ifndef MAKE_FLAWLESS_SAMPLING
 		HAL_ADCEx_MultiModeStop_DMA(&hadc1);
-
+#else
+		//hadc1.DMA_Handle->Instance->CCR = 0;
+		__HAL_DMA_DISABLE(hadc1.DMA_Handle);
+#endif
 		Ts[4] = HAL_GetTick() - started;
 		//__HAL_ADC_DISABLE(&hadc1);
 		//__HAL_ADC_DISABLE(&hadc2);
@@ -207,6 +203,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 #ifndef MAKE_FLAWLESS_SAMPLING
 		HAL_ADCEx_MultiModeStart_DMA(&hadc1);
+#else
+		__HAL_DMA_ENABLE(hadc1.DMA_Handle);
 #endif
 //		acc = acc - min - max;
 //		uint16_t last = acc / ((sizeof(adc_measures)/sizeof(adc_measures[0])) -2);

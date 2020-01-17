@@ -50,6 +50,5 @@ int32_t integrator_int(int32_t sample, INTEGRATOR_INT *i);
 float integrator_ft(float sample, INTEGRATOR_FT *i);
 uint16_t integrator_u16(uint16_t sample, INTEGRATOR_U16 *i);
 uint8_t isavgof5(int32_t data, ISAVGOF5 *i);
-uint32_t sum_u32_arr(uint32_t *arr_p, uint16_t len);
 uint16_t fifo_u32_mean(uint32_t* fifo_start_p, uint16_t fifo_size, uint16_t head, uint16_t tail);
 #endif /* FILTRAI_H_ */

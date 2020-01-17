@@ -210,7 +210,7 @@ void handleIron(uint8_t activity) {
 #ifndef MAKE_FLAWLESS_SAMPLING
 	  set = 1500.0 * set;
 #else
-	  set = 200.0 * set;
+	  set = 300.0 * set;
 #endif
   	  //set += 20* (readTipTemperatureCompensated(0)/350.0); // 40 pwm equal to 350C
 	  set = (set<0)?0:set;
