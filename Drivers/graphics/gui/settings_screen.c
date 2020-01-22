@@ -254,8 +254,10 @@ void settings_screen_setup(screen_t *scr) {
 	scr->update = &default_screenUpdate;
 	widget_t *widget = screen_addWidget(scr);
 	widgetDefaultsInit(widget, widget_label);
-	char *s = "Settings";
-	strcpy(widget->displayString, s);
+//	char *s = "Settings";
+//	strcpy(widget->displayString, s);
+	widget->displayString = "Settings";
+
 	widget->posX = 10;
 	widget->posY = 0;
 	widget->font_size = &FONT_8X14;
@@ -288,8 +290,9 @@ void settings_screen_setup(screen_t *scr) {
 	widget_t *w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "PID";
-	strcpy(w->displayString, s);
+//	s = "PID";
+//	strcpy(w->displayString, s);
+    w->displayString = "PID";
 	w->posX = 50;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -297,8 +300,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Kp:";
-	strcpy(w->displayString, s);
+//	s = "Kp:";
+//	strcpy(w->displayString, s);
+    w->displayString = "Kp:";
 	w->posX = 30;
 	w->posY = 17;
 	w->font_size = &FONT_6X8;
@@ -320,8 +324,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Ki:";
-	strcpy(w->displayString, s);
+//	s = "Ki:";
+//	strcpy(w->displayString, s);
+    w->displayString = "Ki:";
 	w->posX = 30;
 	w->posY = 29;
 	w->font_size = &FONT_6X8;
@@ -343,8 +348,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Kd:";
-	strcpy(w->displayString, s);
+//	s = "Kd:";
+//	strcpy(w->displayString, s);
+    w->displayString = "Kd:";    
 	w->posX = 30;
 	w->posY = 41;
 	w->font_size = &FONT_6X8;
@@ -369,8 +375,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE";    
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 3;
 	w->buttonWidget->action = &savePID;
@@ -380,8 +387,10 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";
+
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 5;
 	w->buttonWidget->action = &cancelPID;
@@ -395,8 +404,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "CONTRAST";
-	strcpy(w->displayString, s);
+//	s = "CONTRAST";
+//	strcpy(w->displayString, s);
+    w->displayString = "CONTRAST";    
 	w->posX = 50;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -404,8 +414,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Value:";
-	strcpy(w->displayString, s);
+//	s = "Value:";
+//	strcpy(w->displayString, s);
+    w->displayString = "Value:";       
 	w->posX = 30;
 	w->posY = 17;
 	w->font_size = &FONT_6X8;
@@ -431,8 +442,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE";       
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 1;
 	w->buttonWidget->action = &saveContrast;
@@ -441,8 +453,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";        
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 2;
 	w->buttonWidget->action = &cancelContrast;
@@ -456,8 +469,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "MAX POWER";
-	strcpy(w->displayString, s);
+//	s = "MAX POWER";
+//	strcpy(w->displayString, s);
+    w->displayString = "MAX POWER";        
 	w->posX = 45;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -465,8 +479,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Value:";
-	strcpy(w->displayString, s);
+//	s = "Value:";
+//	strcpy(w->displayString, s);
+    w->displayString = "Value:";       
 	w->posX = 30;
 	w->posY = 17;
 	w->font_size = &FONT_6X8;
@@ -493,8 +508,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE";      
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 1;
 	w->buttonWidget->action = &savePower;
@@ -503,8 +519,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";     
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 2;
 	w->buttonWidget->action = &cancelPower;
@@ -518,8 +535,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "BOOST";
-	strcpy(w->displayString, s);
+//	s = "BOOST";
+//	strcpy(w->displayString, s);
+    w->displayString = "BOOST";     
 	w->posX = 50;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -527,8 +545,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Time(s):";
-	strcpy(w->displayString, s);
+//	s = "Time(s):";
+//	strcpy(w->displayString, s);
+    w->displayString = "Time(s):";     
 	w->posX = 30;
 	w->posY = 17;
 	w->font_size = &FONT_6X8;
@@ -536,8 +555,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Temp(C):";
-	strcpy(w->displayString, s);
+//	s = "Temp(C):";
+//	strcpy(w->displayString, s);
+    w->displayString = "Temp(C):";     
 	w->posX = 30;
 	w->posY = 27;
 	w->font_size = &FONT_6X8;
@@ -578,8 +598,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE"; 
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 2;
 	w->buttonWidget->action = &saveBoost;
@@ -588,8 +609,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";     
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 3;
 	w->buttonWidget->action = &cancelBoost;
@@ -603,8 +625,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "SLEEP & STANDBY";
-	strcpy(w->displayString, s);
+//	s = "SLEEP & STANDBY";
+//	strcpy(w->displayString, s);
+    w->displayString = "SLEEP & STANDBY";     
 	w->posX = 0;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -612,8 +635,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Sleep Time(s):";
-	strcpy(w->displayString, s);
+//	s = "Sleep Time(s):";
+//	strcpy(w->displayString, s);
+    w->displayString = "Sleep Time(s):";       
 	w->posX = 2;
 	w->posY = 17;
 	w->font_size = &FONT_6X8;
@@ -636,8 +660,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "Sleep Temp(C):";
-	strcpy(w->displayString, s);
+//	s = "Sleep Temp(C):";
+//	strcpy(w->displayString, s);
+    w->displayString = "Sleep Temp(C):";     
 	w->posX = 2;
 	w->posY = 29;
 	w->font_size = &FONT_6X8;
@@ -660,8 +685,9 @@ void settings_screen_setup(screen_t *scr) {
 
 	w = screen_addWidget(sc);
 	widgetDefaultsInit(w, widget_label);
-	s = "StandBy Time(m):";
-	strcpy(w->displayString, s);
+//	s = "StandBy Time(m):";
+//	strcpy(w->displayString, s);
+    w->displayString = "StandBy Time(m):";     
 	w->posX = 2;
 	w->posY = 41;
 	w->font_size = &FONT_6X8;
@@ -687,8 +713,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE";       
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 3;
 	w->buttonWidget->action = &saveSleep;
@@ -697,8 +724,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";           
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 4;
 	w->buttonWidget->action = &cancelSleep;
@@ -712,8 +740,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "TIPS";
-	strcpy(w->displayString, s);
+//	s = "TIPS";
+//	strcpy(w->displayString, s);
+    w->displayString = "TIPS";       
 	w->posX = 0;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -744,8 +773,9 @@ void settings_screen_setup(screen_t *scr) {
 	w = screen_addWidget(sc);
 
 	widgetDefaultsInit(w, widget_label);
-	s = "TIP";
-	strcpy(w->displayString, s);
+//	s = "TIP";
+//	strcpy(w->displayString, s);
+    w->displayString = "TIP";           
 	w->posX = 0;
 	w->posY = 0;
 	w->font_size = &FONT_8X14;
@@ -771,8 +801,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 2;
 	w->posY = 56;
-	s = "SAVE";
-	strcpy(w->displayString, s);
+//	s = "SAVE";
+//	strcpy(w->displayString, s);
+    w->displayString = "SAVE";           
 	w->reservedChars = 4;
 	w->buttonWidget->selectable.tab = 1;
 	w->buttonWidget->action = &saveTip;
@@ -781,8 +812,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 50;
 	w->posY = 56;
-	s = "CANCEL";
-	strcpy(w->displayString, s);
+//	s = "CANCEL";
+//	strcpy(w->displayString, s);
+    w->displayString = "CANCEL";           
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 2;
 	w->buttonWidget->action = &cancelTip;
@@ -793,8 +825,9 @@ void settings_screen_setup(screen_t *scr) {
 	w->font_size = &FONT_6X8;
 	w->posX = 90;
 	w->posY = 56;
-	s = "DELETE";
-	strcpy(w->displayString, s);
+//	s = "DELETE";
+//	strcpy(w->displayString, s);
+    w->displayString = "DELETE";           
 	w->reservedChars = 6;
 	w->buttonWidget->selectable.tab = 3;
 	w->buttonWidget->action = &delTip;

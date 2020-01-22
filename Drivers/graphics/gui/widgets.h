@@ -118,7 +118,7 @@ typedef struct button_widget_t {
 struct widget_t
 {
 
-	char displayString[20];
+	char* displayString;
 
 	struct{
 //	uint8_t reservedChars;

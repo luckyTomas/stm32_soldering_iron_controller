@@ -278,8 +278,9 @@ void debug_screen2_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 2;
 	widget->posY = 56;
-	char *s = "SAVE";
-	strcpy(widget->displayString, s);
+//	char *s = "SAVE";
+//	strcpy(widget->displayString, s);
+    widget->displayString = "SAVE";
 	widget->reservedChars = 4;
 	widget->buttonWidget->selectable.tab = 4;
 	widget->buttonWidget->action = &saveDebug2;
@@ -288,8 +289,9 @@ void debug_screen2_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 90;
 	widget->posY = 56;
-	s = "CANCEL";
-	strcpy(widget->displayString, s);
+//	s = "CANCEL";
+//	strcpy(widget->displayString, s);
+    widget->displayString = "CANCEL";    
 	widget->reservedChars = 6;
 	widget->buttonWidget->selectable.tab = 5;
 	widget->buttonWidget->action = &cancelDebug2;
@@ -340,8 +342,9 @@ void debug_screen3_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 2;
 	widget->posY = 56;
-	char *s = "SAVE";
-	strcpy(widget->displayString, s);
+//	char *s = "SAVE";
+//	strcpy(widget->displayString, s);
+    widget->displayString = "SAVE";    
 	widget->reservedChars = 4;
 	widget->buttonWidget->selectable.tab = 0;
 	widget->buttonWidget->action = &saveDebug3;
@@ -350,8 +353,9 @@ void debug_screen3_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 90;
 	widget->posY = 56;
-	s = "CANCEL";
-	strcpy(widget->displayString, s);
+//	s = "CANCEL";
+//	strcpy(widget->displayString, s);
+    widget->displayString = "CANCEL";
 	widget->reservedChars = 6;
 	widget->buttonWidget->selectable.tab = 1;
 	widget->buttonWidget->action = &cancelDebug3;

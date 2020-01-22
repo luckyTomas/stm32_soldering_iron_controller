@@ -53,11 +53,13 @@ static void setCalState(state_t s) {
 	}
 	else {
 		waitTemp->enabled = 0;
-		strcpy(cancelButton->displayString, "Finish");
+//		strcpy(cancelButton->displayString, "Finish");
+        cancelButton->displayString = "Finish";
 		uint8_t result = processCalibration();
 		waitWidget->posX = 20;
 		if(result) {
-			strcpy(waitWidget->displayString, "Cal succeed");
+//			strcpy(waitWidget->displayString, "Cal succeed");
+            waitWidget->displayString = "Cal succeed";
 			tipData * t = getCurrentTip();
 			t->calADC_At_200 = adcCal[cal_200];
 			t->calADC_At_300 = adcCal[cal_300];
@@ -65,7 +67,8 @@ static void setCalState(state_t s) {
 			saveSettings();
 		}
 		else {
-			strcpy(waitWidget->displayString, "Cal failed");
+//			strcpy(waitWidget->displayString, "Cal failed");
+            waitWidget->displayString = "Cal failed";
 		}
 	}
 }
@@ -109,7 +112,8 @@ static void waitOnEnter(screen_t *scr) {
 		UG_FontSetVSpace(0);
 		waitTemp->enabled = 1;
 		tempReady = 0;
-		strcpy(waitWidget->displayString, "Please wait!");
+		//strcpy(waitWidget->displayString, "Please wait!");
+        waitWidget->displayString = "Please wait!";
 		waitWidget->posX = 10;
 		ironModeBackup = getCurrentMode();
 		tempSetBackup = getSetTemperature();
@@ -139,8 +143,9 @@ void calibration_screen_setup(screen_t *scr) {
 	calWaitScreen = scr;
 	widget_t *widget = screen_addWidget(scr);
 	widgetDefaultsInit(widget, widget_label);
-	char *s = "Please wait!";
-	strcpy(widget->displayString, s);
+//	char *s = "Please wait!";
+//	strcpy(widget->displayString, s);
+    widget->displayString="Please wait!";
 	widget->posX = 10;
 	widget->posY = 16;
 	widget->font_size = &FONT_8X14;
@@ -159,8 +164,9 @@ void calibration_screen_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 90;
 	widget->posY = 56;
-	s = "CANCEL";
-	strcpy(widget->displayString, s);
+//	s = "CANCEL";
+//	strcpy(widget->displayString, s);
+    widget->displayString="CANCEL";    
 	widget->reservedChars = 6;
 	widget->buttonWidget->selectable.tab = 0;
 	widget->buttonWidget->action = &cancelAction;
@@ -175,8 +181,9 @@ void calibration_screen_setup(screen_t *scr) {
 	calInputScreen = sc;
 	widget = screen_addWidget(sc);
 	widgetDefaultsInit(widget, widget_label);
-	s = "Set measured temp.";
-	strcpy(widget->displayString, s);
+//	s = "Set measured temp.";
+//	strcpy(widget->displayString, s);
+    widget->displayString="Set measured temp.";    
 	widget->posX = 10;
 	widget->posY = 16;
 	widget->font_size = &FONT_6X8;
@@ -196,8 +203,9 @@ void calibration_screen_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 90;
 	widget->posY = 56;
-	s = "CANCEL";
-	strcpy(widget->displayString, s);
+//	s = "CANCEL";
+//	strcpy(widget->displayString, s);
+    widget->displayString="CANCEL";  
 	widget->reservedChars = 6;
 	widget->buttonWidget->selectable.tab = 2;
 	widget->buttonWidget->action = &cancelAction;
@@ -207,8 +215,9 @@ void calibration_screen_setup(screen_t *scr) {
 	widget->font_size = &FONT_6X8;
 	widget->posX = 20;
 	widget->posY = 56;
-	s = "OK";
-	strcpy(widget->displayString, s);
+//	s = "OK";
+//	strcpy(widget->displayString, s);
+    widget->displayString="OK";      
 	widget->reservedChars = 6;
 	widget->buttonWidget->selectable.tab = 1;
 	widget->buttonWidget->action = &okAction;

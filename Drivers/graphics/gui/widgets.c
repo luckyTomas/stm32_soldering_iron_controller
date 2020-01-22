@@ -191,8 +191,9 @@ void default_widgetUpdate(widget_t *widget) {
 	{
 #ifndef TODO
 
-		str_len = strlen(widget->multiOptionWidget->options[*(uint8_t*)data]);
-		strcpy(widget->displayString, widget->multiOptionWidget->options[*(uint8_t*)data]);
+//		str_len = strlen(widget->multiOptionWidget->options[*(uint8_t*)data]);
+//		strcpy(widget->displayString, widget->multiOptionWidget->options[*(uint8_t*)data]);
+        widget->displayString = widget->multiOptionWidget->options[*(uint8_t*)data];
 #endif
 		widget->multiOptionWidget->currentOption = *(uint8_t*)data;
 		break;
@@ -201,14 +202,16 @@ void default_widgetUpdate(widget_t *widget) {
 		switch (dis->type) {
 			case field_uinteger16:
 				val_ui16 = *((uint16_t*)(data));
+                widget->displayString = "65.565X";
 				sprintf(widget->displayString,"%d", val_ui16);
 				if(dis->number_of_dec) {
 					insertDot(widget->displayString, dis->number_of_dec);
 				}
 				break;
 			case field_string:
-				str = (char*)(data);
-				strcpy(widget->displayString, str);
+//				str = (char*)(data);
+//				strcpy(widget->displayString, str);
+                widget->displayString = str;
 				break;
 			default:
 				break;
@@ -258,7 +261,7 @@ void default_widgetDraw(widget_t *widget) {
 			}
 	}
 	UG_FontSelect(widget->font_size);
-	char space[sizeof(widget->displayString)] = "           ";
+	char space[20] = "           ";
 	if((widget->type != widget_label) && (extractDisplayPartFromWidget(widget)->type != field_string)) {
 		space[widget->reservedChars] = (char)'\0';
 		UG_PutString(widget->posX ,widget->posY , space);
@@ -424,8 +427,9 @@ int default_widgetProcessInput(widget_t *widget, RE_Rotation_t input, RE_State_t
 				widget->editable->setData(&ui16);
 				break;
 			case field_string:
-				str = (char*)widget->editable->inputData.getData();
-				strcpy(widget->displayString, str);
+//				str = (char*)widget->editable->inputData.getData();
+//				strcpy(widget->displayString, str);
+                widget->displayString = str;
 				widget->displayString[extractEditablePartFromWidget(widget)->current_edit] += inc;
 				if(widget->displayString[extractEditablePartFromWidget(widget)->current_edit] < 48) {
 					if(inc > 0) {
