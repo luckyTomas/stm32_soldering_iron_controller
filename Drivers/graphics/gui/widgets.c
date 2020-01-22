@@ -260,17 +260,17 @@ void default_widgetDraw(widget_t *widget) {
 	UG_FontSelect(widget->font_size);
 	char space[sizeof(widget->displayString)] = "           ";
 	if((widget->type != widget_label) && (extractDisplayPartFromWidget(widget)->type != field_string)) {
-		space[widget->reservedChars] = (char)'\0';
+//		space[widget->reservedChars] = (char)'\0';
 		UG_PutString(widget->posX ,widget->posY , space);
-		widget->displayString[widget->reservedChars] = (char)'\0';
+//		widget->displayString[widget->reservedChars] = (char)'\0';
 		UG_PutString(widget->posX ,widget->posY , widget->displayString);
 	}
 	else if(extractDisplayPartFromWidget(widget)->type == field_string) {
 		UG_SetBackcolor ( C_BLACK ) ;
 		UG_SetForecolor ( C_WHITE ) ;
-		space[widget->reservedChars] = (char)'\0';
+//		space[widget->reservedChars] = (char)'\0';
 		UG_PutString(widget->posX ,widget->posY , space);
-		widget->displayString[widget->reservedChars] = (char)'\0';
+//		widget->displayString[widget->reservedChars] = (char)'\0';
 		UG_PutString(widget->posX ,widget->posY , widget->displayString);
 		if(extractSelectablePartFromWidget(widget)->state == widget_edit)
 			UG_PutChar(widget->displayString[extractEditablePartFromWidget(widget)->current_edit], widget->posX + widget->font_size->char_width * extractEditablePartFromWidget(widget)->current_edit, widget->posY, C_BLACK, C_WHITE);
