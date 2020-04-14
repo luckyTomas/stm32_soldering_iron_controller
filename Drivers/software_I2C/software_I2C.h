@@ -16,7 +16,7 @@ void i2c_shift_out(GPIO_TypeDef *sclport, uint16_t sclpin, GPIO_TypeDef *sdaport
 uint8_t i2c_shift_in(GPIO_TypeDef *sclport, uint16_t sclpin, GPIO_TypeDef *sdaport, uint16_t sdapin);
 //static uint8_t i2c_read8(uint8_t addr);
 void i2c_write_raw(GPIO_TypeDef *sclport, uint16_t sclpin, GPIO_TypeDef *sdaport, uint16_t sdapin, uint8_t *val, uint8_t size);
-void i2c_write(GPIO_TypeDef *sclport, uint16_t sclpin, GPIO_TypeDef *sdaport, uint16_t sdapin, uint8_t i2c_addr, uint8_t *val, uint8_t size);
+inline void i2c_write(GPIO_TypeDef *sclport, uint16_t sclpin, GPIO_TypeDef *sdaport, uint16_t sdapin, uint8_t i2c_addr, uint8_t *val, uint8_t size);
 
 #ifdef __cplusplus
 }
