@@ -12,6 +12,20 @@
 #define ABS(x) (( (x)<0)? -(x):(x))
 #define POS(x) (( (x)<0)?  0 : (x))
 
+
+#define LIM_HIGH(x,lim)  (( (x) > (lim))? (lim):(x));
+#define LIM_LOW(x,lim)  ((x) <(lim))? (lim):(x);
+
+#define LIM_RANGE(x,lower, upper)  \
+if( (x) < (lower) ){                      \
+    x = lower;                     \
+}else if( (x) > (upper) ){               \
+    x = lower;                     \
+}
+
+#define VALS_DIF_GREATER_THAN(val, ref, dif)  \
+( abs((float)val-(float)ref)>dif)?1:0)
+
 typedef struct{
   int (*buf_p)[1];
   const unsigned int buf_size;
