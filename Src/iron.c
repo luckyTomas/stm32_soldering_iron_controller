@@ -179,16 +179,14 @@ void handleIron(uint8_t activity) {
 		case mode_set:
 			if(activity)
 				currentModeTimer = currentTime;
-			else if(currentTime - currentModeTimer > (currentSleepSettings.sleepTime * 1000)) {
+			else {
 				setCurrentMode(mode_sleep);
 				buzzer_short_beep();
 			}
-			else if(currentTime - currentModeTimer > (currentSleepSettings.standbyTime * 1000 * 60)) {
-				setCurrentMode(mode_standby);
-				buzzer_long_beep();
-			}
 			break;
+		default:
 		case mode_sleep:
+		case mode_standby:
 			if(activity) {
 				setCurrentMode(mode_set);
 				buzzer_short_beep();
@@ -197,10 +195,8 @@ void handleIron(uint8_t activity) {
 				setCurrentMode(mode_standby);
 				buzzer_long_beep();
 			}
-			break;
-		case mode_standby:
-			break;
-		default:
+
+
 			break;
 	}
 

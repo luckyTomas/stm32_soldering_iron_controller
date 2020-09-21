@@ -123,16 +123,15 @@ int main(void)
 		  readTipTemperatureCompensated(1);
 
 		  if(HAL_GPIO_ReadPin(WAKE_GPIO_Port, WAKE_Pin) == GPIO_PIN_RESET) {
-			  if(startOfNoActivity == 0)
-				  startOfNoActivityTime = HAL_GetTick();
-			  startOfNoActivity = 1;
-			  if((HAL_GetTick() - startOfNoActivityTime) > 500)
+			  if((HAL_GetTick() - startOfNoActivityTime) > 1000)
 				  activity = 0;
 		  }
 		  else {
 			  activity = 1;
-			  startOfNoActivity = 0;
+			  startOfNoActivityTime = HAL_GetTick();
 		  }
+
+
 		  handleIron(activity);
 		  iron_temp_measure_state = iron_temp_measure_idle;
 		  Benchmark._05_main_calc_dur = TOCK;

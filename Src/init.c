@@ -2,13 +2,13 @@
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_tim.h"
 
-TIM_OC_InitTypeDef sConfigOC;
-UART_HandleTypeDef huart3;
+TIM_OC_InitTypeDef sConfigOC = {0};
+UART_HandleTypeDef huart3 = {0};
 
-DMA_HandleTypeDef hdma_adc1;
-IWDG_HandleTypeDef hiwdg;
-TIM_HandleTypeDef tim3_pwm;
-TIM_HandleTypeDef tim4_temp_measure;
+DMA_HandleTypeDef hdma_adc1 = {0};
+IWDG_HandleTypeDef hiwdg = {0};
+TIM_HandleTypeDef tim3_pwm = {0};
+TIM_HandleTypeDef tim4_temp_measure = {0};
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /** System Clock Configuration
@@ -294,11 +294,17 @@ void MX_GPIO_Init(void) {
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : ROT_ENC_BUTTON_GPIO_Pin WAKE_Pin */
-	GPIO_InitStruct.Pin = ROT_ENC_BUTTON_GPIO_Pin | WAKE_Pin;
+	GPIO_InitStruct.Pin = ROT_ENC_BUTTON_GPIO_Pin ;
 	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	GPIO_InitStruct.Pin = WAKE_Pin;
+	GPIO_InitStruct.Mode = WAKE_Pin;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
 
 	/* EXTI interrupt init*/
 	HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);

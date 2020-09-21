@@ -176,7 +176,7 @@ static UG_BMP bmp;
 #if 1
 static void splash_init(screen_t * scr) {
 	splash_time = HAL_GetTick();
-	bmp.p = logo_ips;
+	bmp.p = (void*)logo_ips;
 	bmp.width = 128;
 	bmp.height = 64;
 	bmp.colors = 2;
