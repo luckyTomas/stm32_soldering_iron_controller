@@ -25,7 +25,7 @@ void write_data(uint8_t *data) {
 #endif
 }
 
-void write_cmd(uint8_t data) {
+inline void write_cmd(uint8_t data) {
 #ifndef HW_VER2_1S
 	HAL_GPIO_WritePin(OLED_CS_GPIO_Port, OLED_CS_Pin,GPIO_PIN_SET);//CS
 	HAL_GPIO_WritePin(OLED_DC_GPIO_Port, OLED_DC_Pin,GPIO_PIN_RESET);//DC
@@ -70,7 +70,7 @@ void update_display( void )
 #warning "BUILDING FOR 1.3inch SCREEN"
       write_cmd(0x02);
 #else
-      write_cmd(0x00);
+      write_cmd(0x02);
 #endif
       write_cmd(0x10);
       write_data(buffer + p * 128);
