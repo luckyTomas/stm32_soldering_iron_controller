@@ -25,7 +25,8 @@ displayOnly_wiget_t * extractDisplayPartFromWidget(widget_t *widget) {
 }
 
 inline const UG_FONT * extractFontFromType(uint32_t type) {
-	const UG_FONT *FONT_PTRS[3] = { &FONT_6X8, &FONT_8X14, &FONT_16X26};
+	//const UG_FONT * const FONT_PTRS[3] = { &FONT_6X8, &FONT_8X14, &FONT_16X26};
+	const UG_FONT *const FONT_PTRS[3] = { &FONT_6X8, &FONT_8X14, &FONT_22X36};
 
 	if(type<0 || type>= sizeof(FONT_PTRS)/sizeof(FONT_PTRS[0]) )
 		type=0;

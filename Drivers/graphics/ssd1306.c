@@ -40,14 +40,20 @@ inline void write_cmd(uint8_t data) {
 #endif
 }
 
+int err=0;
 void pset(UG_S16 x, UG_S16 y, UG_COLOR c)
 {
    unsigned int p;
 
-   if ( x > 127 ) return;
+
    p = y>>3; // :8
    p = p<<7; // *128
    p +=x;
+
+   if ( p >= sizeof(buffer) ){
+	   err++;
+	   return;
+   }
 
    if( c )
    {

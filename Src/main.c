@@ -29,7 +29,7 @@ Ts_t Benchmark;
 
 static uint8_t activity = 1;
 static uint32_t startOfNoActivityTime = 0;
-static uint8_t startOfNoActivity = 0;
+
 
 volatile uint32_t adc = 0;
 volatile uint32_t dma = 0;

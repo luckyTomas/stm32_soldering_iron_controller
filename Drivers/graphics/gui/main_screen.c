@@ -197,8 +197,8 @@ void main_screen_setup(screen_t *scr) {
 	// NO IRON
 	widget = screen_addWidget(scr);
 	widgetDefaultsInit(widget, widget_label);
-	strcpy(widget->displayString, "NO IRON");
-	widget->posX = 5;
+	strcpy(widget->displayString, "---");
+	widget->posX = 30;
 	widget->posY = 20 + 5 - 2;
 	widget->font_size = _FONT_16X26;
 	widget->reservedChars = 7;
@@ -206,6 +206,8 @@ void main_screen_setup(screen_t *scr) {
 	noIronWidget = widget;
 	widget->enabled = 0;
 
+
+#if 0
 	//Thermometer bmp next to Ambient temperature
 	widget = screen_addWidget(scr);
 	widgetDefaultsInit(widget, widget_bmp);
@@ -249,7 +251,7 @@ void main_screen_setup(screen_t *scr) {
 	widget->displayWidget->number_of_dec = 1;
 	widget->displayWidget->type = field_uinteger16;
 	widget->reservedChars = 4;
-
+#endif
 	// tip temperature setpoint
 	widget = screen_addWidget(scr);
 	widgetDefaultsInit(widget, widget_editable);
