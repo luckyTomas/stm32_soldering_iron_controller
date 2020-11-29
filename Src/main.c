@@ -81,7 +81,7 @@ int main(void)
 
   //HAL_TIM_Base_Start_IT(&tim3_pwm);
   restoreSettings();
-
+  setCurrentTip(2);
   DWT_Delay_Init(); // Important for I2C communication
   UG_GUI gui;
   ssd1306_init();

@@ -217,17 +217,16 @@ uint16_t update_pwm(void){
 	  set = (set<1)?0:set;
 	  set = (set>PWM_TIM_PERDIO_LIMIT)?PWM_TIM_PERDIO_LIMIT:set;
 
-	  if(isIronOn)
-		  currentIronPower = UINT_DIV(set*100, PWM_TIM_PERDIO);
-	  else
-		  currentIronPower = 0;
+
+	  currentIronPower = UINT_DIV(set*100, PWM_TIM_PERDIO);
 
 	  return CONV_TO_UINT(set);
 }
+#if 0
 void iron_pwm_cc_set(uint16_t val){
 	__HAL_TIM_SET_COMPARE(ironPWMTimer, TIM_CHANNEL_3, val);
 }
-
+#endif
 void ironInit(TIM_HandleTypeDef *timer) {
 	ironPWMTimer = timer;
 	user_currentSetTemperature = systemSettings.setTemperature;
