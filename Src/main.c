@@ -10,9 +10,9 @@
 #include "iron.h"
 #include "init.h"
 #include "config.h"
+#include "mmain.h"
 
 adc_measures_t adc_measures;
-volatile iron_temp_measure_state_t iron_temp_measure_state = iron_temp_measure_idle;
 
 
 ADC_HandleTypeDef hadc1;
@@ -28,7 +28,6 @@ Ts_t Benchmark;
 //uint32_t Ts[5];
 
 static uint8_t activity = 1;
-static uint32_t startOfNoActivityTime = 0;
 
 
 volatile uint32_t adc = 0;
@@ -44,6 +43,8 @@ RE_State_t RE1_Data;
 extern TIM_HandleTypeDef tim4_temp_measure;
 extern IWDG_HandleTypeDef hiwdg;
 extern TIM_HandleTypeDef tim3_pwm;
+
+
 
 
 int main(void)
@@ -78,26 +79,29 @@ int main(void)
   }
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &adc_measures.iron[0], ADC_MEASURES_LEN );
 
-  HAL_TIM_Base_Start_IT(&tim4_temp_measure);
+  HAL_TIM_Base_Start_IT(&tim3_pwm);
   restoreSettings();
 
   DWT_Delay_Init(); // Important for I2C communication
   UG_GUI gui;
   ssd1306_init();
   UG_Init(&gui, pset, 128, 64);
-  guiInit();
-  oled_init();
-  oled_draw();
+
+	UG_FontSelect(&FONT_32X53);
+	UG_PutString(10 , 10 , "Hi");
+	oled_draw();
+	HAL_Delay(1000);
+
+//  guiInit();
+//  oled_init();
+//  oled_draw();
   UG_Update();
   update_display();
 
   HAL_IWDG_Start(&hiwdg);
   RE_Init(&RE1_Data, ROT_ENC_L_GPIO_Port, ROT_ENC_L_Pin, ROT_ENC_R_GPIO_Port, ROT_ENC_R_Pin, ROT_ENC_BUTTON_GPIO_Port, ROT_ENC_BUTTON_GPIO_Pin);
 
-  uint32_t lastTimeDisplay = HAL_GetTick();
-
-  setPWM_tim(&tim3_pwm);
-  iron_temp_measure_state = iron_temp_measure_idle;
+  //setPWM_tim(&tim3_pwm);
   setContrast(systemSettings.contrast);
   currentBoostSettings = systemSettings.boost;
   currentSleepSettings = systemSettings.sleep;
@@ -112,10 +116,11 @@ int main(void)
 	  setCurrentMode(mode_sleep);
   }
 
+
+
   while (1)
   {
-
-
+#if 0
 	  HAL_IWDG_Refresh(&hiwdg);
 	  if(iron_temp_measure_state == iron_temp_measure_ready) {
 		  TICK_TOCK(Benchmark._00_pwm_update_T);
@@ -147,6 +152,8 @@ int main(void)
 		  lastTimeDisplay = HAL_GetTick();
 		  Benchmark._04_oled_update_dur = TOCK;
 	  }
+#endif
+	  mmain();
   }
 
 }

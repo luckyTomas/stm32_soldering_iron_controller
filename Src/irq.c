@@ -11,7 +11,6 @@
 #define IRQ_CB_LAG 1
 #define CNDTR_IDX  POS( ADC_MEASURES_LEN - CNDTR )
 
-
 volatile uint16_t iron_temp_adc_avg = 0;
 uint16_t new_len;
 volatile int good_vals;
@@ -24,6 +23,7 @@ void tim3_pulseFinishCb(TIM_HandleTypeDef *htim){
 		iron_pwm_cc_set(new_pwm_cc);
 		prev_pwm_cc = new_pwm_cc;
 	}
+
 }
 
 
@@ -37,9 +37,15 @@ void flawless_adc_ConvCpltCb(ADC_HandleTypeDef *htim){
 			iron_temp_adc_avg = 4055;
 		}
 
-		if(getIronOn()){
+		if(iron_temp_adc_avg > 4000){
+			new_pwm_cc = 0;
+			set_iron_con(0);
+		}else{
 			new_pwm_cc = update_pwm();
+			set_iron_con(1);
 		}
+
+
 
 		HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &adc_measures.iron, ADC_MEASURES_LEN ); /* never stop adc */
 		Benchmark._08_adc_proc_dur = TOCK;

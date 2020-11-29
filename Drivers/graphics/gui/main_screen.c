@@ -259,6 +259,9 @@ void main_screen_setup(screen_t *scr) {
 	widget->posX = 36;
 	widget->posY = 1;
 	widget->font_size = _FONT_8X14;
+//	widget->editable->inputData.getData = &main_screen_getIronTemp10x;
+//	widget->editable->inputData.number_of_dec = 1;
+//	widget->editable->inputData.type = field_uinteger16;
 	widget->editable->inputData.getData = &getTemp;
 	widget->editable->inputData.number_of_dec = 0;
 	widget->editable->inputData.type = field_uinteger16;

@@ -59,4 +59,6 @@ void turnIronOff();
 uint8_t getIronOn();
 void setDebugSetPoint(uint16_t value);
 void setDebugMode(uint8_t value);
+uint8_t is_iron_connected(void);
+uint8_t set_iron_con(uint8_t val);
 #endif /* IRON_H_ */

@@ -10,7 +10,6 @@
 #include "init.h"
 
 
-uint32_t started ;
 struct{
 	int elapsed_cnt;
 	int pulse_cnt;
@@ -31,14 +30,10 @@ inline void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 
 	if(htim == &tim4_temp_measure){
-		if(iron_temp_measure_state == iron_temp_measure_idle) {
 #ifndef FLAWLESS_MEAS
 			tim4_PeriodElapsedCallback(htim);
 #endif
-			iron_temp_measure_state = iron_temp_measure_started;
 
-			started = HAL_GetTick();
-		}
 	}
 
 
@@ -51,16 +46,12 @@ inline void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 	if(hadc == &hadc1){
 		TICK_TOCK(Benchmark._03_sample_period);
-		if(iron_temp_measure_state == iron_temp_measure_started){
 #ifdef FLAWLESS_MEAS
 			flawless_adc_ConvCpltCb(hadc);
 #else
 			adc_ConvCpltCb(hadc);
 #endif
 
-			iron_temp_measure_state = iron_temp_measure_ready;
-			Benchmark._01_sample_dur = HAL_GetTick() - started;
-		}
 	}
 
 }

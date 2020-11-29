@@ -35,12 +35,6 @@ typedef struct {
 
 extern adc_measures_t adc_measures;
 
-typedef enum {iron_temp_measure_idle
-	, iron_temp_measure_pwm_stopped
-	, iron_temp_measure_requested
-	, iron_temp_measure_started
-	, iron_temp_measure_ready
-} iron_temp_measure_state_t;
-extern volatile iron_temp_measure_state_t iron_temp_measure_state;
+
 extern volatile uint16_t iron_temp_adc_avg;
 #endif /* GENERALIO_ADC_GLOBAL_H_ */

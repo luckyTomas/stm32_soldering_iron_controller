@@ -65,17 +65,16 @@ static void modeChanged(iron_mode_t newMode) {
 		s = s->next;
 	}
 }
-void turnIronOn() {
-	HAL_TIM_PWM_Start(ironPWMTimer, TIM_CHANNEL_3);
-	isIronOn = 1;
+
+uint8_t is_iron_con=0;
+uint8_t set_iron_con(uint8_t val){
+	is_iron_con = val;
 }
-void turnIronOff() {
-	HAL_TIM_PWM_Stop(ironPWMTimer, TIM_CHANNEL_3);
-	isIronOn = 0;
+
+uint8_t is_iron_connected(void){
+	return is_iron_con;
 }
-uint8_t getIronOn() {
-	return isIronOn;
-}
+
 void applyBoostSettings() {
 	currentBoostSettings = systemSettings.boost;
 }
@@ -93,10 +92,6 @@ void setSetTemperature(uint16_t temperature) {
 void setCurrentTemperature(uint16_t temperature) {
 	currentSetTemperature = temperature;
 	tempSetPoint = temperature;
-	if((temperature == 0) && getIronOn())
-		turnIronOff();
-	else if(!getIronOn())
-		turnIronOn();
 	resetPID();
 
 }
