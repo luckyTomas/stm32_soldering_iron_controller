@@ -20,7 +20,7 @@ static uint16_t user_currentSetTemperature = 300;
 static uint16_t tempSetPoint;
 static uint8_t currentIronPower = 0;
 static uint8_t temperatureReachedFlag = 0;
-static TIM_HandleTypeDef *ironPWMTimer;
+TIM_HandleTypeDef *ironPWMTimer;
 static uint8_t isIronOn = 0;
 static uint32_t lastSetTemperatureTime = 0;
 static uint8_t setTemperatureChanged = 0;

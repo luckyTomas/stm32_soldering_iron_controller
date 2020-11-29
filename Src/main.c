@@ -66,9 +66,9 @@ int main(void)
   else
 	  buzzer_short_beep();
 
-  ironInit(&tim3_pwm);
+  //ironInit(&tim3_pwm);
   MX_IWDG_Init();
-  MX_TIM4_Init();
+  //MX_TIM4_Init();
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* Enable ADC slave */
@@ -79,7 +79,7 @@ int main(void)
   }
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) &adc_measures.iron[0], ADC_MEASURES_LEN );
 
-  HAL_TIM_Base_Start_IT(&tim3_pwm);
+  //HAL_TIM_Base_Start_IT(&tim3_pwm);
   restoreSettings();
 
   DWT_Delay_Init(); // Important for I2C communication
