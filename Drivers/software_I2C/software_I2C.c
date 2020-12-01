@@ -7,7 +7,17 @@
 #define LOW  GPIO_PIN_RESET
 
 static void i2c_delay() {
-	DWT_Delay_us(1);
+	//DWT_Delay_us(1);
+  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
+//  __ASM volatile ("NOP");
 }
 
 static void digitalWrite(GPIO_TypeDef *GPIO_Port, uint16_t GPIO_Pin, GPIO_PinState PinState){

@@ -46,7 +46,7 @@ extern TIM_HandleTypeDef tim3_pwm;
 
 
 
-
+#define VER "1.1"
 int main(void)
 {
   HAL_Init();
@@ -88,7 +88,10 @@ int main(void)
   UG_Init(&gui, pset, 128, 64);
 
 	UG_FontSelect(&FONT_32X53);
-	UG_PutString(10 , 10 , "Hi");
+	UG_PutString(10 , 10, "Hi");
+
+	UG_FontSelect(&FONT_10X16);
+	UG_PutString(80 , 40 , VER);
 	oled_draw();
 	HAL_Delay(1000);
 

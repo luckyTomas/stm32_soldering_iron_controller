@@ -34,6 +34,7 @@ void mmain(void){
 	int inc;
 	char temp_str[10];
 	tmo = 0;
+	uint8_t flush=0;
 	while(1){
 		rot = RE_Get(&RE1_Data);
 
@@ -66,8 +67,8 @@ void mmain(void){
 		if( ABS(diff) >=1){
 			UG_FillFrame(0,55,128,64,0);
 			if(show_power){
-				UG_DrawMesh(0,55, LIM_HIGH(show_power*2,128),64, C_GREEN_YELLOW);
-				oled_draw();
+				UG_DrawMesh(0,55, LIM_HIGH(show_power*3,128),64, C_GREEN_YELLOW);
+				flush = 1;
 			}
 			prev_show_power_len = show_power;
 		}
@@ -82,8 +83,14 @@ void mmain(void){
 				UG_PutString(10 , 0 , "---");
 			}
 
-			oled_draw();
+			//oled_draw();
+			flush = 1;
 			prev_show_temp = show_temp;
+		}
+
+		if(flush){
+		  flush = 0;
+		  oled_draw();
 		}else{
 			HAL_Delay(100);
 		}
